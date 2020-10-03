@@ -10,8 +10,10 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-native": "^0.63.23",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-native-web": "^0.13.14",
     "react-scripts": "3.4.3",
     "typescript": "~3.7.2"
   },
