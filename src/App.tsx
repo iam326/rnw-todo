@@ -1,25 +1,17 @@
-import React from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  Button,
+} from 'react-native';
 
 type ListItem = {
   id: string;
   title: string;
 };
-
-const DATA: ListItem[] = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
 
 const Item: React.FC<{ title: string }> = ({ title }) => (
   <View style={styles.item}>
@@ -32,10 +24,40 @@ const App: React.FC = () => {
     <Item title={item.title} />
   );
 
+  const [value, onChangeText] = useState('hoge');
+  const [todoList, setTodoList] = useState<ListItem[]>([
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+    },
+  ]);
+
   return (
-    <View>
+    <View style={styles.wrapper}>
+      <View>
+        {/* 横並びにする */}
+        <TextInput
+          style={styles.textInput}
+          onChangeText={(text) => onChangeText(text)}
+          value={value}
+        />
+        <Button
+          title="ADD"
+          onPress={() => {
+            if (value !== '') {
+              const list = todoList.concat();
+              list.push({
+                id: 'hoge',
+                title: value,
+              });
+              setTodoList(list);
+              onChangeText('');
+            }
+          }}
+        />
+      </View>
       <FlatList
-        data={DATA}
+        data={todoList}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
@@ -44,6 +66,15 @@ const App: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    padding: 20,
+  },
+  textInput: {
+    height: 40,
+    paddingLeft: 8,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
   item: {
     padding: 5,
     marginVertical: 2,
