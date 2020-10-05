@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TextInput,
   Button,
   CheckBox,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
-type ListItem = {
+type TodoItem = {
   timestamp: number;
-  title: string;
-  check: boolean;
-  update: boolean;
+  body: string;
+  checked: boolean;
+  editable: boolean;
 };
 
 const App: React.FC = () => {
   const [value, onChangeText] = useState('hoge');
-  const [todoList, setTodoList] = useState<ListItem[]>([]);
+  const [todoList, setTodoList] = useState<TodoItem[]>([]);
 
-  const renderItem: React.FC<{ item: ListItem; index: number }> = ({
+  const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
     item,
     index,
   }) => (
     <View style={styles.row}>
       <CheckBox
         style={styles.checkbox}
-        value={todoList[index].check}
+        value={todoList[index].checked}
         onValueChange={(value) => {
           const newTodoList = todoList.concat();
-          newTodoList[index].check = value;
+          newTodoList[index].checked = value;
           setTodoList(newTodoList);
         }}
       />
@@ -39,24 +39,24 @@ const App: React.FC = () => {
           {new Date(item.timestamp).toLocaleString()}
         </Text>
         <TextInput
-          style={styles.title}
+          style={styles.body}
           onChangeText={(text) => {
             const newTodoList = todoList.concat();
-            newTodoList[index].title = text;
+            newTodoList[index].body = text;
             setTodoList(newTodoList);
           }}
           onFocus={() => {
             const newTodoList = todoList.concat();
-            newTodoList[index].update = true;
+            newTodoList[index].editable = true;
             setTodoList(newTodoList);
           }}
           onBlur={() => {
             const newTodoList = todoList.concat();
-            newTodoList[index].update = false;
+            newTodoList[index].editable = false;
             setTodoList(newTodoList);
           }}
-          editable={todoList[index].update}
-          value={todoList[index].title}
+          editable={todoList[index].editable}
+          value={todoList[index].body}
         />
       </View>
     </View>
@@ -80,9 +80,9 @@ const App: React.FC = () => {
               const list = todoList.concat();
               list.push({
                 timestamp: Date.now(),
-                title: value,
-                check: false,
-                update: false,
+                body: value,
+                checked: false,
+                editable: false,
               });
               setTodoList(list);
               onChangeText('');
@@ -93,10 +93,10 @@ const App: React.FC = () => {
         <Button
           title="DELETE"
           onPress={() => {
-            const newTodoList = todoList.filter((todo) => !todo.check);
+            const newTodoList = todoList.filter((todo) => !todo.checked);
             setTodoList(newTodoList);
           }}
-          disabled={todoList.every((todo) => !todo.check)}
+          disabled={todoList.every((todo) => !todo.checked)}
         />
       </View>
       <FlatList
@@ -114,6 +114,9 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 20,
+  },
+  title: {
+    fontSize: 32,
   },
   form: {
     display: 'flex',
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
   checkbox: {
     marginRight: 20,
   },
-  title: {
+  body: {
     fontSize: 24,
   },
   date: {
