@@ -13,6 +13,7 @@ type ListItem = {
   timestamp: number;
   title: string;
   check: boolean;
+  update: boolean;
 };
 
 const App: React.FC = () => {
@@ -35,14 +36,35 @@ const App: React.FC = () => {
       <Text style={styles.date}>
         {new Date(item.timestamp).toLocaleString()}
       </Text>
-      <Text style={styles.title}>{item.title}</Text>
+      <TextInput
+        style={styles.title}
+        onChangeText={(text) => {
+          const newTodoList = todoList.concat();
+          newTodoList[index].title = text;
+          setTodoList(newTodoList);
+        }}
+        onFocus={() => {
+          const newTodoList = todoList.concat();
+          newTodoList[index].update = true;
+          setTodoList(newTodoList);
+        }}
+        onBlur={() => {
+          const newTodoList = todoList.concat();
+          newTodoList[index].update = false;
+          setTodoList(newTodoList);
+        }}
+        editable={todoList[index].update}
+        value={todoList[index].title}
+      />
     </View>
   );
 
   return (
     <View style={styles.wrapper}>
       <View>
-        {/* 横並びにする */}
+        <Text style={styles.title}>TODO リスト</Text>
+      </View>
+      <View>
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => onChangeText(text)}
@@ -57,11 +79,13 @@ const App: React.FC = () => {
                 timestamp: Date.now(),
                 title: value,
                 check: false,
+                update: false,
               });
               setTodoList(list);
               onChangeText('');
             }
           }}
+          disabled={value === ''}
         />
         <Button
           title="DELETE"
@@ -69,6 +93,7 @@ const App: React.FC = () => {
             const newTodoList = todoList.filter((todo) => !todo.check);
             setTodoList(newTodoList);
           }}
+          disabled={todoList.every((todo) => !todo.check)}
         />
       </View>
       <FlatList
