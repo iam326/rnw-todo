@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 
+import Header from './components/Header';
+
 type TodoItem = {
   timestamp: number;
   body: string;
@@ -64,9 +66,7 @@ const App: React.FC = () => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.header}>
-        <Text style={styles.title}>TODO リスト</Text>
-      </View>
+      <Header title="TODO リスト" />
       <View style={styles.form}>
         <TextInput
           style={styles.textInput}
@@ -111,12 +111,6 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 20,
-  },
-  header: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 32,
   },
   form: {
     display: 'flex',
