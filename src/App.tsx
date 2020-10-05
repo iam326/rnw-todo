@@ -6,31 +6,38 @@ import {
   FlatList,
   TextInput,
   Button,
+  CheckBox,
 } from 'react-native';
 
 type ListItem = {
-  id: string;
+  timestamp: number;
   title: string;
+  check: boolean;
 };
 
-const Item: React.FC<{ title: string }> = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>・ {title}</Text>
-  </View>
-);
-
 const App: React.FC = () => {
-  const renderItem: React.FC<{ item: ListItem }> = ({ item }) => (
-    <Item title={item.title} />
-  );
-
   const [value, onChangeText] = useState('hoge');
-  const [todoList, setTodoList] = useState<ListItem[]>([
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-  ]);
+  const [todoList, setTodoList] = useState<ListItem[]>([]);
+
+  const renderItem: React.FC<{ item: ListItem; index: number }> = ({
+    item,
+    index,
+  }) => (
+    <View style={styles.item}>
+      <CheckBox
+        value={todoList[index].check}
+        onValueChange={(value) => {
+          const newTodoList = todoList.concat();
+          newTodoList[index].check = value;
+          setTodoList(newTodoList);
+        }}
+      />
+      <Text style={styles.date}>
+        {new Date(item.timestamp).toLocaleString()}
+      </Text>
+      <Text style={styles.title}>{item.title}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.wrapper}>
@@ -47,19 +54,27 @@ const App: React.FC = () => {
             if (value !== '') {
               const list = todoList.concat();
               list.push({
-                id: 'hoge',
+                timestamp: Date.now(),
                 title: value,
+                check: false,
               });
               setTodoList(list);
               onChangeText('');
             }
           }}
         />
+        <Button
+          title="DELETE"
+          onPress={() => {
+            const newTodoList = todoList.filter((todo) => !todo.check);
+            setTodoList(newTodoList);
+          }}
+        />
       </View>
       <FlatList
         data={todoList}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.timestamp.toString()}
       />
     </View>
   );
@@ -82,6 +97,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  date: {
+    fontSize: 12,
   },
 });
 
