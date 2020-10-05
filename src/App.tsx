@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Button,
   CheckBox,
   FlatList,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 
 import Header from './components/Header';
+import Form from './components/Form';
 
 type TodoItem = {
   timestamp: number;
@@ -67,38 +67,27 @@ const App: React.FC = () => {
   return (
     <View style={styles.wrapper}>
       <Header title="TODO リスト" />
-      <View style={styles.form}>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(text) => onChangeText(text)}
-          value={value}
-        />
-        <Button
-          title="ADD"
-          onPress={() => {
-            if (value !== '') {
-              const list = todoList.concat();
-              list.push({
-                timestamp: Date.now(),
-                body: value,
-                checked: false,
-                editable: false,
-              });
-              setTodoList(list);
-              onChangeText('');
-            }
-          }}
-          disabled={value === ''}
-        />
-        <Button
-          title="DELETE"
-          onPress={() => {
-            const newTodoList = todoList.filter((todo) => !todo.checked);
-            setTodoList(newTodoList);
-          }}
-          disabled={todoList.every((todo) => !todo.checked)}
-        />
-      </View>
+      <Form
+        value={value}
+        handleChangeValue={onChangeText}
+        handleAddItem={() => {
+          if (value !== '') {
+            const list = todoList.concat();
+            list.push({
+              timestamp: Date.now(),
+              body: value,
+              checked: false,
+              editable: false,
+            });
+            setTodoList(list);
+            onChangeText('');
+          }
+        }}
+        handleDeleteItem={() => {
+          const newTodoList = todoList.filter((todo) => !todo.checked);
+          setTodoList(newTodoList);
+        }}
+      />
       <FlatList
         data={todoList}
         renderItem={renderItem}
@@ -111,19 +100,6 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 20,
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    marginBottom: 20,
-  },
-  textInput: {
-    flexBasis: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 8,
   },
   row: {
     display: 'flex',
