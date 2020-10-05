@@ -15,7 +15,6 @@ type TodoItem = {
   timestamp: number;
   body: string;
   checked: boolean;
-  editable: boolean;
 };
 
 const App: React.FC = () => {
@@ -47,17 +46,7 @@ const App: React.FC = () => {
             newTodoList[index].body = text;
             setTodoList(newTodoList);
           }}
-          onFocus={() => {
-            const newTodoList = todoList.concat();
-            newTodoList[index].editable = true;
-            setTodoList(newTodoList);
-          }}
-          onBlur={() => {
-            const newTodoList = todoList.concat();
-            newTodoList[index].editable = false;
-            setTodoList(newTodoList);
-          }}
-          editable={todoList[index].editable}
+          editable={true}
           value={todoList[index].body}
         />
       </View>
@@ -77,7 +66,6 @@ const App: React.FC = () => {
               timestamp: Date.now(),
               body: value,
               checked: false,
-              editable: false,
             });
             setTodoList(list);
             onChangeText('');
