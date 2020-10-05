@@ -24,8 +24,9 @@ const App: React.FC = () => {
     item,
     index,
   }) => (
-    <View style={styles.item}>
+    <View style={styles.row}>
       <CheckBox
+        style={styles.checkbox}
         value={todoList[index].check}
         onValueChange={(value) => {
           const newTodoList = todoList.concat();
@@ -33,38 +34,40 @@ const App: React.FC = () => {
           setTodoList(newTodoList);
         }}
       />
-      <Text style={styles.date}>
-        {new Date(item.timestamp).toLocaleString()}
-      </Text>
-      <TextInput
-        style={styles.title}
-        onChangeText={(text) => {
-          const newTodoList = todoList.concat();
-          newTodoList[index].title = text;
-          setTodoList(newTodoList);
-        }}
-        onFocus={() => {
-          const newTodoList = todoList.concat();
-          newTodoList[index].update = true;
-          setTodoList(newTodoList);
-        }}
-        onBlur={() => {
-          const newTodoList = todoList.concat();
-          newTodoList[index].update = false;
-          setTodoList(newTodoList);
-        }}
-        editable={todoList[index].update}
-        value={todoList[index].title}
-      />
+      <View>
+        <Text style={styles.date}>
+          {new Date(item.timestamp).toLocaleString()}
+        </Text>
+        <TextInput
+          style={styles.title}
+          onChangeText={(text) => {
+            const newTodoList = todoList.concat();
+            newTodoList[index].title = text;
+            setTodoList(newTodoList);
+          }}
+          onFocus={() => {
+            const newTodoList = todoList.concat();
+            newTodoList[index].update = true;
+            setTodoList(newTodoList);
+          }}
+          onBlur={() => {
+            const newTodoList = todoList.concat();
+            newTodoList[index].update = false;
+            setTodoList(newTodoList);
+          }}
+          editable={todoList[index].update}
+          value={todoList[index].title}
+        />
+      </View>
     </View>
   );
 
   return (
     <View style={styles.wrapper}>
-      <View>
+      <View style={styles.header}>
         <Text style={styles.title}>TODO リスト</Text>
       </View>
-      <View>
+      <View style={styles.form}>
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => onChangeText(text)}
@@ -109,16 +112,31 @@ const styles = StyleSheet.create({
   wrapper: {
     padding: 20,
   },
+  header: {
+    marginBottom: 20,
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    marginBottom: 20,
+  },
   textInput: {
+    flexBasis: '100%',
     height: 40,
-    paddingLeft: 8,
     borderColor: 'gray',
     borderWidth: 1,
+    paddingLeft: 8,
   },
-  item: {
-    padding: 5,
-    marginVertical: 2,
-    marginHorizontal: 8,
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  checkbox: {
+    marginRight: 20,
   },
   title: {
     fontSize: 24,
