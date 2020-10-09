@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {
   CheckBox,
   FlatList,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -54,40 +56,46 @@ const App: React.FC = () => {
   );
 
   return (
-    <View>
-      <Header title="TODO リスト" />
-      <View style={styles.content}>
-        <Form
-          value={value}
-          handleChangeValue={onChangeText}
-          handleAddItem={() => {
-            if (value !== '') {
-              const list = todoList.concat();
-              list.push({
-                timestamp: Date.now(),
-                body: value,
-                checked: false,
-              });
-              setTodoList(list);
-              onChangeText('');
-            }
-          }}
-          handleDeleteItem={() => {
-            const newTodoList = todoList.filter((todo) => !todo.checked);
-            setTodoList(newTodoList);
-          }}
-        />
-        <FlatList
-          data={todoList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.timestamp.toString()}
-        />
-      </View>
-    </View>
+    <SafeAreaView style={styles.root}>
+      <ScrollView scrollEnabled={true}>
+        <Header title="TODO リスト" />
+        <View style={styles.content}>
+          <Form
+            value={value}
+            handleChangeValue={onChangeText}
+            handleAddItem={() => {
+              if (value !== '') {
+                const list = todoList.concat();
+                list.push({
+                  timestamp: Date.now(),
+                  body: value,
+                  checked: false,
+                });
+                setTodoList(list);
+                onChangeText('');
+              }
+            }}
+            handleDeleteItem={() => {
+              const newTodoList = todoList.filter((todo) => !todo.checked);
+              setTodoList(newTodoList);
+            }}
+          />
+          <FlatList
+            data={todoList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.timestamp.toString()}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    width: '100%',
+    height: '100vh',
+  },
   content: {
     padding: 20,
   },
