@@ -79,7 +79,7 @@ const App: React.FC = () => {
             handleAddItem={() => {
               if (value !== '') {
                 const list = todoList.slice();
-                list.push({
+                list.unshift({
                   timestamp: Date.now(),
                   body: value,
                   checked: false,
