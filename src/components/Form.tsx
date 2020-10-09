@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    marginBottom: 20,
   },
   textInput: {
     flexBasis: '100%',

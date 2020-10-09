@@ -3,18 +3,21 @@ import { Text, StyleSheet, View } from 'react-native';
 
 const Header: React.FC<{ title: string }> = ({ title }) => {
   return (
-    <View style={styles.header}>
+    <View style={styles.root}>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    marginBottom: 20,
+  root: {
+    padding: 10,
+    backgroundColor: '#90CAF9',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#222',
   },
 });
 

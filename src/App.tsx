@@ -35,12 +35,12 @@ const App: React.FC = () => {
           setTodoList(newTodoList);
         }}
       />
-      <View>
+      <View style={styles.todoBody}>
         <Text style={styles.date}>
           {new Date(item.timestamp).toLocaleString()}
         </Text>
         <TextInput
-          style={styles.body}
+          style={styles.textInput}
           onChangeText={(text) => {
             const newTodoList = todoList.concat();
             newTodoList[index].body = text;
@@ -54,39 +54,41 @@ const App: React.FC = () => {
   );
 
   return (
-    <View style={styles.wrapper}>
+    <View>
       <Header title="TODO リスト" />
-      <Form
-        value={value}
-        handleChangeValue={onChangeText}
-        handleAddItem={() => {
-          if (value !== '') {
-            const list = todoList.concat();
-            list.push({
-              timestamp: Date.now(),
-              body: value,
-              checked: false,
-            });
-            setTodoList(list);
-            onChangeText('');
-          }
-        }}
-        handleDeleteItem={() => {
-          const newTodoList = todoList.filter((todo) => !todo.checked);
-          setTodoList(newTodoList);
-        }}
-      />
-      <FlatList
-        data={todoList}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.timestamp.toString()}
-      />
+      <View style={styles.content}>
+        <Form
+          value={value}
+          handleChangeValue={onChangeText}
+          handleAddItem={() => {
+            if (value !== '') {
+              const list = todoList.concat();
+              list.push({
+                timestamp: Date.now(),
+                body: value,
+                checked: false,
+              });
+              setTodoList(list);
+              onChangeText('');
+            }
+          }}
+          handleDeleteItem={() => {
+            const newTodoList = todoList.filter((todo) => !todo.checked);
+            setTodoList(newTodoList);
+          }}
+        />
+        <FlatList
+          data={todoList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.timestamp.toString()}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  content: {
     padding: 20,
   },
   row: {
@@ -94,15 +96,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#666',
   },
   checkbox: {
     marginRight: 20,
   },
-  body: {
+  todoBody: {
+    flex: 1,
+  },
+  textInput: {
+    paddingVertical: 6,
     fontSize: 24,
   },
   date: {
+    color: '#666',
     fontSize: 12,
   },
 });
