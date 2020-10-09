@@ -43,7 +43,9 @@ const App: React.FC = () => {
           {new Date(item.timestamp).toLocaleString()}
         </Text>
         <TextInput
-          style={styles.textInput}
+          style={
+            item.checked ? [styles.textInput, styles.done] : styles.textInput
+          }
           onChangeText={(text) => {
             const newTodoList = todoList.slice();
             newTodoList[index].body = text;
@@ -123,6 +125,10 @@ const styles = StyleSheet.create({
   textInput: {
     paddingVertical: 6,
     fontSize: 24,
+  },
+  done: {
+    textDecorationLine: 'line-through',
+    color: '#666',
   },
   date: {
     color: '#666',
