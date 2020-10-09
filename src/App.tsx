@@ -33,7 +33,7 @@ const App: React.FC = () => {
         style={styles.checkbox}
         value={todoList[index].checked}
         onValueChange={(value) => {
-          const newTodoList = todoList.concat();
+          const newTodoList = todoList.slice();
           newTodoList[index].checked = value;
           setTodoList(newTodoList);
         }}
@@ -45,7 +45,7 @@ const App: React.FC = () => {
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => {
-            const newTodoList = todoList.concat();
+            const newTodoList = todoList.slice();
             newTodoList[index].body = text;
             setTodoList(newTodoList);
           }}
@@ -56,7 +56,7 @@ const App: React.FC = () => {
       <TouchableOpacity
         style={styles.closeButton}
         onPress={() => {
-          const list = todoList.concat();
+          const list = todoList.slice();
           list.splice(index, 1);
           setTodoList(list);
         }}
@@ -76,7 +76,7 @@ const App: React.FC = () => {
             handleChangeValue={onChangeText}
             handleAddItem={() => {
               if (value !== '') {
-                const list = todoList.concat();
+                const list = todoList.slice();
                 list.push({
                   timestamp: Date.now(),
                   body: value,
