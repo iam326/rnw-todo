@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -52,6 +53,16 @@ const App: React.FC = () => {
           value={todoList[index].body}
         />
       </View>
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => {
+          const list = todoList.concat();
+          list.splice(index, 1);
+          setTodoList(list);
+        }}
+      >
+        <Text style={styles.closeText}>x</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -104,10 +115,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#666',
   },
-  checkbox: {
-    marginRight: 20,
-  },
+  checkbox: {},
   todoBody: {
+    marginHorizontal: 20,
     flex: 1,
   },
   textInput: {
@@ -117,6 +127,17 @@ const styles = StyleSheet.create({
   date: {
     color: '#666',
     fontSize: 12,
+  },
+  closeButton: {
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    backgroundColor: '#eee',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeText: {
+    color: '#666',
   },
 });
 
