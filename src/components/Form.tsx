@@ -1,41 +1,53 @@
 import React from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const Form: React.FC<{
   value: string;
   handleChangeValue: (text: string) => void;
   handleAddItem: () => void;
-  handleDeleteItem: () => void;
-}> = ({ value, handleChangeValue, handleAddItem, handleDeleteItem }) => {
+}> = ({ value, handleChangeValue, handleAddItem }) => {
   return (
-    <View style={styles.form}>
+    <View style={styles.root}>
       <TextInput
         style={styles.textInput}
         onChangeText={handleChangeValue}
         value={value}
       />
-      <Button title="ADD" onPress={handleAddItem} disabled={value === ''} />
-      <Button
-        title="DELETE"
-        onPress={handleDeleteItem}
-        //disabled={todoList.every((todo) => !todo.checked)}
-      />
+      <TouchableOpacity style={styles.addButton} onPress={handleAddItem}>
+        <Text style={styles.addText}>追加</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  form: {
+  root: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
   },
   textInput: {
-    flexBasis: '100%',
-    height: 40,
-    borderColor: 'gray',
+    flex: 1,
+    paddingVertical: 6,
+    fontSize: 24,
+    borderColor: '#666',
     borderWidth: 1,
-    paddingLeft: 8,
+    marginRight: 10,
+  },
+  addButton: {
+    minWidth: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#90CAF9',
+  },
+  addText: {
+    fontSize: 18,
   },
 });
 

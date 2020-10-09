@@ -75,10 +75,6 @@ const App: React.FC = () => {
                 onChangeText('');
               }
             }}
-            handleDeleteItem={() => {
-              const newTodoList = todoList.filter((todo) => !todo.checked);
-              setTodoList(newTodoList);
-            }}
           />
           <FlatList
             data={todoList}
