@@ -1,9 +1,9 @@
 import { atom } from 'recoil';
 
 export type TodoItem = {
-  timestamp: number;
-  body: string;
-  checked: boolean;
+  createdAt: number;
+  title: string;
+  done: boolean;
 };
 
 export const todoList = atom<TodoItem[]>({

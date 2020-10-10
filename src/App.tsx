@@ -27,32 +27,30 @@ const App: React.FC = () => {
   }) => (
     <View style={styles.row}>
       <CheckBox
-        value={todoList[index].checked}
+        value={todoList[index].done}
         onValueChange={(value) => {
           setTodoList([
             ...todoList.slice(0, index),
-            { ...todoList[index], checked: value },
+            { ...todoList[index], done: value },
             ...todoList.slice(index + 1),
           ]);
         }}
       />
       <View style={styles.todoBody}>
         <Text style={styles.date}>
-          {new Date(item.timestamp).toLocaleString()}
+          {new Date(item.createdAt).toLocaleString()}
         </Text>
         <TextInput
-          style={
-            item.checked ? [styles.textInput, styles.done] : styles.textInput
-          }
+          style={item.done ? [styles.textInput, styles.done] : styles.textInput}
           onChangeText={(text) => {
             setTodoList([
               ...todoList.slice(0, index),
-              { ...todoList[index], body: text },
+              { ...todoList[index], title: text },
               ...todoList.slice(index + 1),
             ]);
           }}
           editable={true}
-          value={todoList[index].body}
+          value={todoList[index].title}
         />
       </View>
       <TouchableOpacity
@@ -80,7 +78,7 @@ const App: React.FC = () => {
             if (value !== '') {
               setTodoList([
                 ...todoList,
-                { timestamp: Date.now(), body: value, checked: false },
+                { createdAt: Date.now(), title: value, done: false },
               ]);
               onChangeText('');
             }
@@ -90,7 +88,7 @@ const App: React.FC = () => {
           style={styles.todoList}
           data={todoList}
           renderItem={renderItem}
-          keyExtractor={(item) => item.timestamp.toString()}
+          keyExtractor={(item) => item.createdAt.toString()}
         />
       </View>
     </SafeAreaView>
