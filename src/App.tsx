@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
   CheckBox,
+  Dimensions,
   FlatList,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -30,7 +30,6 @@ const App: React.FC = () => {
   }) => (
     <View style={styles.row}>
       <CheckBox
-        style={styles.checkbox}
         value={todoList[index].checked}
         onValueChange={(value) => {
           const newTodoList = todoList.slice();
@@ -70,32 +69,31 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <ScrollView scrollEnabled={true}>
-        <Header title="TODO リスト" />
-        <View style={styles.content}>
-          <Form
-            value={value}
-            handleChangeValue={onChangeText}
-            handleAddItem={() => {
-              if (value !== '') {
-                const list = todoList.slice();
-                list.unshift({
-                  timestamp: Date.now(),
-                  body: value,
-                  checked: false,
-                });
-                setTodoList(list);
-                onChangeText('');
-              }
-            }}
-          />
-          <FlatList
-            data={todoList}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.timestamp.toString()}
-          />
-        </View>
-      </ScrollView>
+      <Header title="TODO リスト" />
+      <View style={styles.content}>
+        <Form
+          value={value}
+          handleChangeValue={onChangeText}
+          handleAddItem={() => {
+            if (value !== '') {
+              const list = todoList.slice();
+              list.unshift({
+                timestamp: Date.now(),
+                body: value,
+                checked: false,
+              });
+              setTodoList(list);
+              onChangeText('');
+            }
+          }}
+        />
+        <FlatList
+          style={styles.todoList}
+          data={todoList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.timestamp.toString()}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -107,6 +105,10 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    height: Dimensions.get('window').height - 56,
+  },
+  todoList: {
+    marginTop: 20,
   },
   row: {
     display: 'flex',
@@ -117,7 +119,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#666',
   },
-  checkbox: {},
   todoBody: {
     marginHorizontal: 20,
     flex: 1,
