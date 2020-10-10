@@ -18,7 +18,7 @@ import { Todo } from './store';
 import { TodoItem } from './store/todo';
 
 const App: React.FC = () => {
-  const [value, onChangeText] = useState('');
+  const [title, onChangeTitle] = useState('');
   const [todoList, setTodoList] = useRecoilState(Todo.todoList);
 
   const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
@@ -28,10 +28,10 @@ const App: React.FC = () => {
     <View style={styles.row}>
       <CheckBox
         value={todoList[index].done}
-        onValueChange={(value) => {
+        onValueChange={(checked) => {
           setTodoList([
             ...todoList.slice(0, index),
-            { ...todoList[index], done: value },
+            { ...todoList[index], done: checked },
             ...todoList.slice(index + 1),
           ]);
         }}
@@ -72,15 +72,15 @@ const App: React.FC = () => {
       <Header title="TODO リスト" />
       <View style={styles.content}>
         <Form
-          value={value}
-          handleChangeValue={onChangeText}
+          value={title}
+          handleChangeValue={onChangeTitle}
           handleAddItem={() => {
-            if (value !== '') {
+            if (title !== '') {
               setTodoList([
                 ...todoList,
-                { createdAt: Date.now(), title: value, done: false },
+                { createdAt: Date.now(), title, done: false },
               ]);
-              onChangeText('');
+              onChangeTitle('');
             }
           }}
         />
