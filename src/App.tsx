@@ -29,9 +29,11 @@ const App: React.FC = () => {
       <CheckBox
         value={todoList[index].checked}
         onValueChange={(value) => {
-          const newTodoList = todoList.slice();
-          newTodoList[index].checked = value;
-          setTodoList(newTodoList);
+          setTodoList([
+            ...todoList.slice(0, index),
+            { ...todoList[index], checked: value },
+            ...todoList.slice(index + 1),
+          ]);
         }}
       />
       <View style={styles.todoBody}>
@@ -43,9 +45,11 @@ const App: React.FC = () => {
             item.checked ? [styles.textInput, styles.done] : styles.textInput
           }
           onChangeText={(text) => {
-            const newTodoList = todoList.slice();
-            newTodoList[index].body = text;
-            setTodoList(newTodoList);
+            setTodoList([
+              ...todoList.slice(0, index),
+              { ...todoList[index], body: text },
+              ...todoList.slice(index + 1),
+            ]);
           }}
           editable={true}
           value={todoList[index].body}
@@ -54,9 +58,10 @@ const App: React.FC = () => {
       <TouchableOpacity
         style={styles.closeButton}
         onPress={() => {
-          const list = todoList.slice();
-          list.splice(index, 1);
-          setTodoList(list);
+          setTodoList([
+            ...todoList.slice(0, index),
+            ...todoList.slice(index + 1),
+          ]);
         }}
       >
         <Text style={styles.closeText}>x</Text>
@@ -73,13 +78,10 @@ const App: React.FC = () => {
           handleChangeValue={onChangeText}
           handleAddItem={() => {
             if (value !== '') {
-              const list = todoList.slice();
-              list.unshift({
-                timestamp: Date.now(),
-                body: value,
-                checked: false,
-              });
-              setTodoList(list);
+              setTodoList([
+                ...todoList,
+                { timestamp: Date.now(), body: value, checked: false },
+              ]);
               onChangeText('');
             }
           }}
