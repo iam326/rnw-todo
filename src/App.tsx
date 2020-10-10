@@ -10,19 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { RecoilRoot, useRecoilState } from 'recoil';
 
 import Header from './components/Header';
 import Form from './components/Form';
-
-type TodoItem = {
-  timestamp: number;
-  body: string;
-  checked: boolean;
-};
+import { Todo } from './store';
+import { TodoItem } from './store/todo';
 
 const App: React.FC = () => {
-  const [value, onChangeText] = useState('hoge');
-  const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  const [value, onChangeText] = useState('');
+  const [todoList, setTodoList] = useRecoilState(Todo.todoList);
 
   const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
     item,
@@ -148,4 +145,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const AppWrapper: React.FC = () => (
+  <RecoilRoot>
+    <App />
+  </RecoilRoot>
+);
+
+export default AppWrapper;
