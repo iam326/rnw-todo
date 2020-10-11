@@ -15,10 +15,8 @@ type Props = {
 
 const TodoList: React.FC<Props> = ({ style }) => {
   const {
-    title,
     handleAddItem,
     handleUpdateItem,
-    onChangeTitle,
     handleChangeState,
     handleDeleteItem,
   } = useTodo();
@@ -39,11 +37,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
 
   return (
     <View style={style}>
-      <AddItemForm
-        value={title}
-        handleChangeValue={onChangeTitle}
-        handleAddItem={handleAddItem}
-      />
+      <AddItemForm handleAddItem={handleAddItem} />
       <FlatList
         style={styles.list}
         data={todoList}

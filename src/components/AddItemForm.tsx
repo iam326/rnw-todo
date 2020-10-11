@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,18 +8,20 @@ import {
 } from 'react-native';
 
 const AddItemForm: React.FC<{
-  value: string;
-  handleChangeValue: (text: string) => void;
-  handleAddItem: () => void;
-}> = ({ value, handleChangeValue, handleAddItem }) => {
+  handleAddItem: (title: string) => void;
+}> = ({ handleAddItem }) => {
+  const [title, onChangeTitle] = useState('');
   return (
     <View style={styles.root}>
       <TextInput
         style={styles.textInput}
-        onChangeText={handleChangeValue}
-        value={value}
+        onChangeText={onChangeTitle}
+        value={title}
       />
-      <TouchableOpacity style={styles.addButton} onPress={handleAddItem}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => handleAddItem(title)}
+      >
         <Text style={styles.addText}>追加</Text>
       </TouchableOpacity>
     </View>

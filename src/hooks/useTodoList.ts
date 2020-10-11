@@ -1,16 +1,13 @@
-import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import Store from '../store';
 
-const useTodo = () => {
-  const [title, onChangeTitle] = useState(''); // これはここにあるべきか?
+const useTodoList = () => {
   const [todoList, setTodoList] = useRecoilState(Store.Todo.todoList);
 
-  const handleAddItem = () => {
+  const handleAddItem = (title: string) => {
     if (title !== '') {
       setTodoList([...todoList, { createdAt: Date.now(), title, done: false }]);
-      onChangeTitle('');
     }
   };
 
@@ -35,13 +32,11 @@ const useTodo = () => {
   };
 
   return {
-    title,
     handleAddItem,
     handleChangeState,
-    onChangeTitle,
     handleUpdateItem,
     handleDeleteItem,
   };
 };
 
-export default useTodo;
+export default useTodoList;
