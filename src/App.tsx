@@ -10,7 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import {
+  RecoilRoot,
+  useRecoilState,
+  useRecoilTransactionObserver_UNSTABLE,
+  MutableSnapshot,
+} from 'recoil';
 
 import Header from './components/Header';
 import Form from './components/Form';
@@ -145,8 +150,33 @@ const styles = StyleSheet.create({
   },
 });
 
+const RecoilStatePersist: React.FC = () => {
+  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
+    for (const modifiedAtom of (snapshot as any).getNodes_UNSTABLE({
+      isModified: true,
+    })) {
+      const atomLoadable = snapshot.getLoadable(modifiedAtom);
+      if (atomLoadable.state === 'hasValue') {
+        localStorage.setItem(
+          modifiedAtom.key,
+          JSON.stringify({ value: atomLoadable.contents })
+        );
+      }
+    }
+  });
+  return null;
+};
+
+const initializeState = (mutableSnapshot: MutableSnapshot) => {
+  const item = localStorage.getItem(Todo.todoList.key);
+  if (item) {
+    mutableSnapshot.set(Todo.todoList, JSON.parse(item).value);
+  }
+};
+
 const AppWrapper: React.FC = () => (
-  <RecoilRoot>
+  <RecoilRoot initializeState={initializeState}>
+    <RecoilStatePersist />
     <App />
   </RecoilRoot>
 );
