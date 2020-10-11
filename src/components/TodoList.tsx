@@ -38,7 +38,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
           ]);
         }}
       />
-      <View style={styles.todoBody}>
+      <View style={styles.content}>
         <Text style={styles.date}>
           {new Date(item.createdAt).toLocaleString()}
         </Text>
@@ -56,7 +56,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
         />
       </View>
       <TouchableOpacity
-        style={styles.closeButton}
+        style={styles.deleteButton}
         onPress={() => {
           setTodoList([
             ...todoList.slice(0, index),
@@ -64,7 +64,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
           ]);
         }}
       >
-        <Text style={styles.closeText}>x</Text>
+        <Text style={styles.deleteText}>x</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,7 +85,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
         }}
       />
       <FlatList
-        style={styles.todoList}
+        style={styles.list}
         data={todoList}
         renderItem={renderItem}
         keyExtractor={(item) => item.createdAt.toString()}
@@ -95,7 +95,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
 };
 
 const styles = StyleSheet.create({
-  todoList: {
+  list: {
     marginTop: 20,
   },
   row: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#666',
   },
-  todoBody: {
+  content: {
     marginHorizontal: 20,
     flex: 1,
   },
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 12,
   },
-  closeButton: {
+  deleteButton: {
     height: 30,
     width: 30,
     borderRadius: 50,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  closeText: {
+  deleteText: {
     color: '#666',
   },
 });
