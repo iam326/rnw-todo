@@ -40,7 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@types/recoil": "^0.0.1",
     "prettier": "^2.1.2"
   }
 }
