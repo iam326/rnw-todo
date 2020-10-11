@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, View, ViewStyle } from 'react-native';
 import { useRecoilValue } from 'recoil';
 
-import Form from './Form';
+import AddItemForm from './AddItemForm';
 import TodoListItem from './TodoListItem';
 import useTodo from '../hooks/useTodoList';
 
@@ -39,7 +39,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
 
   return (
     <View style={style}>
-      <Form
+      <AddItemForm
         value={title}
         handleChangeValue={onChangeTitle}
         handleAddItem={handleAddItem}

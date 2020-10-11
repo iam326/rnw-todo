@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-const Form: React.FC<{
+const AddItemForm: React.FC<{
   value: string;
   handleChangeValue: (text: string) => void;
   handleAddItem: () => void;
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Form;
+export default AddItemForm;
