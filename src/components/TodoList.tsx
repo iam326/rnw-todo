@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FlatList, StyleSheet, View, ViewStyle } from 'react-native';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import Form from './Form';
 import TodoListItem from './TodoListItem';
+import useTodo from '../hooks/useTodoList';
+
 import Store from '../store';
 import { TodoItem } from '../store/todo';
 
@@ -12,28 +14,35 @@ type Props = {
 };
 
 const TodoList: React.FC<Props> = ({ style }) => {
-  const [title, onChangeTitle] = useState('');
-  const [todoList, setTodoList] = useRecoilState(Store.Todo.todoList);
+  const {
+    title,
+    handleAddItem,
+    handleUpdateItem,
+    onChangeTitle,
+    handleChangeState,
+    handleDeleteItem,
+  } = useTodo();
+  const todoList = useRecoilValue(Store.Todo.todoList);
 
   const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
     item,
     index,
-  }) => <TodoListItem item={item} index={index} />;
+  }) => (
+    <TodoListItem
+      item={item}
+      index={index}
+      handleChangeState={handleChangeState}
+      handleUpdateItem={handleUpdateItem}
+      handleDeleteItem={handleDeleteItem}
+    />
+  );
 
   return (
     <View style={style}>
       <Form
         value={title}
         handleChangeValue={onChangeTitle}
-        handleAddItem={() => {
-          if (title !== '') {
-            setTodoList([
-              ...todoList,
-              { createdAt: Date.now(), title, done: false },
-            ]);
-            onChangeTitle('');
-          }
-        }}
+        handleAddItem={handleAddItem}
       />
       <FlatList
         style={styles.list}

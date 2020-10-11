@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import Store from '../store';
 import { TodoItem } from '../store/todo';
@@ -15,21 +15,26 @@ import { TodoItem } from '../store/todo';
 type Props = {
   item: TodoItem;
   index: number;
+  handleChangeState: (index: number, checked: boolean) => void;
+  handleUpdateItem: (index: number, text: string) => void;
+  handleDeleteItem: (index: number) => void;
 };
 
-const TodoListItem: React.FC<Props> = ({ item, index }) => {
-  const [todoList, setTodoList] = useRecoilState(Store.Todo.todoList);
+const TodoListItem: React.FC<Props> = ({
+  item,
+  index,
+  handleChangeState,
+  handleUpdateItem,
+  handleDeleteItem,
+}) => {
+  const todoList = useRecoilValue(Store.Todo.todoList);
 
   return (
     <View style={styles.row}>
       <CheckBox
         value={todoList[index].done}
         onValueChange={(checked) => {
-          setTodoList([
-            ...todoList.slice(0, index),
-            { ...todoList[index], done: checked },
-            ...todoList.slice(index + 1),
-          ]);
+          handleChangeState(index, checked);
         }}
       />
       <View style={styles.content}>
@@ -39,11 +44,7 @@ const TodoListItem: React.FC<Props> = ({ item, index }) => {
         <TextInput
           style={item.done ? [styles.textInput, styles.done] : styles.textInput}
           onChangeText={(text) => {
-            setTodoList([
-              ...todoList.slice(0, index),
-              { ...todoList[index], title: text },
-              ...todoList.slice(index + 1),
-            ]);
+            handleUpdateItem(index, text);
           }}
           editable={true}
           value={todoList[index].title}
@@ -52,10 +53,7 @@ const TodoListItem: React.FC<Props> = ({ item, index }) => {
       <TouchableOpacity
         style={styles.deleteButton}
         onPress={() => {
-          setTodoList([
-            ...todoList.slice(0, index),
-            ...todoList.slice(index + 1),
-          ]);
+          handleDeleteItem(index);
         }}
       >
         <Text style={styles.deleteText}>x</Text>
