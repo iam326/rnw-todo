@@ -20,7 +20,10 @@ const AddItemForm: React.FC<{
       />
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => handleAddItem(text)}
+        onPress={() => {
+          handleAddItem(text);
+          onChangeText('');
+        }}
       >
         <Text style={styles.addText}>追加</Text>
       </TouchableOpacity>
