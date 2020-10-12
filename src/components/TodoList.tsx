@@ -19,6 +19,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
     handleChangeState,
     handleDeleteItem,
   } = Hooks.useTodoList();
+
   const todoList = useRecoilValue(Store.TodoList.todoList);
 
   const renderItem: React.FC<{ item: TodoListItemProps; index: number }> = ({

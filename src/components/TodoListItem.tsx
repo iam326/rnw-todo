@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useRecoilValue } from 'recoil';
 
-import Store from '../store';
 import { TodoListItemProps } from '../store/todoList';
 
 type Props = {
@@ -27,12 +25,10 @@ const TodoListItem: React.FC<Props> = ({
   handleUpdateItem,
   handleDeleteItem,
 }) => {
-  const todoList = useRecoilValue(Store.TodoList.todoList);
-
   return (
     <View style={styles.row}>
       <CheckBox
-        value={todoList[index].done}
+        value={item.done}
         onValueChange={(checked) => {
           handleChangeState(index, checked);
         }}
@@ -47,7 +43,7 @@ const TodoListItem: React.FC<Props> = ({
             handleUpdateItem(index, text);
           }}
           editable={true}
-          value={todoList[index].title}
+          value={item.title}
         />
       </View>
       <TouchableOpacity

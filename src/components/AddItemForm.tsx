@@ -8,19 +8,19 @@ import {
 } from 'react-native';
 
 const AddItemForm: React.FC<{
-  handleAddItem: (title: string) => void;
+  handleAddItem: (text: string) => void;
 }> = ({ handleAddItem }) => {
-  const [title, onChangeTitle] = useState('');
+  const [text, onChangeText] = useState('');
   return (
     <View style={styles.root}>
       <TextInput
         style={styles.textInput}
-        onChangeText={onChangeTitle}
-        value={title}
+        onChangeText={onChangeText}
+        value={text}
       />
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => handleAddItem(title)}
+        onPress={() => handleAddItem(text)}
       >
         <Text style={styles.addText}>追加</Text>
       </TouchableOpacity>
