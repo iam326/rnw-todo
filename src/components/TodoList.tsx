@@ -4,8 +4,7 @@ import { useRecoilValue } from 'recoil';
 
 import AddItemForm from './AddItemForm';
 import TodoListItem from './TodoListItem';
-import useTodoList from '../hooks/useTodoList';
-
+import Hooks from '../hooks';
 import Store from '../store';
 import { TodoItem } from '../store/todoList';
 
@@ -19,7 +18,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
     handleUpdateItem,
     handleChangeState,
     handleDeleteItem,
-  } = useTodoList();
+  } = Hooks.useTodoList();
   const todoList = useRecoilValue(Store.TodoList.todoList);
 
   const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
