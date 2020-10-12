@@ -11,7 +11,8 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
 
 const styles = StyleSheet.create({
   root: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: '#90CAF9',
   },
   title: {
