@@ -6,7 +6,7 @@ import AddItemForm from './AddItemForm';
 import TodoListItem from './TodoListItem';
 import Hooks from '../hooks';
 import Store from '../store';
-import { TodoItem } from '../store/todoList';
+import { TodoListItemProps } from '../store/todoList';
 
 type Props = {
   style?: ViewStyle;
@@ -21,7 +21,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
   } = Hooks.useTodoList();
   const todoList = useRecoilValue(Store.TodoList.todoList);
 
-  const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
+  const renderItem: React.FC<{ item: TodoListItemProps; index: number }> = ({
     item,
     index,
   }) => (

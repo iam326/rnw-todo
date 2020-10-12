@@ -1,12 +1,12 @@
 import { atom } from 'recoil';
 
-export type TodoItem = {
+export type TodoListItemProps = {
   createdAt: number;
   title: string;
   done: boolean;
 };
 
-export const todoList = atom<TodoItem[]>({
+export const todoList = atom<TodoListItemProps[]>({
   key: 'store/todoList',
   default: [],
 });

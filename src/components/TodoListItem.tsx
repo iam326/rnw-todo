@@ -10,10 +10,10 @@ import {
 import { useRecoilValue } from 'recoil';
 
 import Store from '../store';
-import { TodoItem } from '../store/todoList';
+import { TodoListItemProps } from '../store/todoList';
 
 type Props = {
-  item: TodoItem;
+  item: TodoListItemProps;
   index: number;
   handleChangeState: (index: number, checked: boolean) => void;
   handleUpdateItem: (index: number, text: string) => void;
