@@ -6,7 +6,7 @@ export type TodoListItemProps = {
   done: boolean;
 };
 
-export const todoList = atom<TodoListItemProps[]>({
+export const data = atom<TodoListItemProps[]>({
   key: 'store/todoList',
   default: [],
 });
