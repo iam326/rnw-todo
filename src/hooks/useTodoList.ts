@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import Store from '../store';
 
 const useTodoList = () => {
-  const [todoList, setTodoList] = useRecoilState(Store.Todo.todoList);
+  const [todoList, setTodoList] = useRecoilState(Store.TodoList.todoList);
 
   const handleAddItem = useCallback(
     (title: string) => {

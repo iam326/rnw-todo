@@ -10,7 +10,7 @@ import {
 import { useRecoilValue } from 'recoil';
 
 import Store from '../store';
-import { TodoItem } from '../store/todo';
+import { TodoItem } from '../store/todoList';
 
 type Props = {
   item: TodoItem;
@@ -27,7 +27,7 @@ const TodoListItem: React.FC<Props> = ({
   handleUpdateItem,
   handleDeleteItem,
 }) => {
-  const todoList = useRecoilValue(Store.Todo.todoList);
+  const todoList = useRecoilValue(Store.TodoList.todoList);
 
   return (
     <View style={styles.row}>

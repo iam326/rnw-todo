@@ -1,3 +1,3 @@
-import * as Todo from './todo';
+import * as TodoList from './todoList';
 
-export default { Todo };
+export default { TodoList };

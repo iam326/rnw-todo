@@ -7,7 +7,7 @@ import TodoListItem from './TodoListItem';
 import useTodoList from '../hooks/useTodoList';
 
 import Store from '../store';
-import { TodoItem } from '../store/todo';
+import { TodoItem } from '../store/todoList';
 
 type Props = {
   style?: ViewStyle;
@@ -20,7 +20,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
     handleChangeState,
     handleDeleteItem,
   } = useTodoList();
-  const todoList = useRecoilValue(Store.Todo.todoList);
+  const todoList = useRecoilValue(Store.TodoList.todoList);
 
   const renderItem: React.FC<{ item: TodoItem; index: number }> = ({
     item,
