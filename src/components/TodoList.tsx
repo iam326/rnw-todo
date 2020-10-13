@@ -36,7 +36,7 @@ const TodoList: React.FC<Props> = ({ style }) => {
   );
 
   return (
-    <View style={style}>
+    <View style={[styles.root, style]}>
       <AddItemForm handleAddItem={handleAddItem} />
       <FlatList
         style={styles.list}
@@ -49,8 +49,12 @@ const TodoList: React.FC<Props> = ({ style }) => {
 };
 
 const styles = StyleSheet.create({
+  root: {
+    paddingVertical: 20,
+  },
   list: {
     marginTop: 20,
+    paddingHorizontal: 20,
   },
 });
 

@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    paddingHorizontal: 20,
   },
   textInput: {
     flex: 1,

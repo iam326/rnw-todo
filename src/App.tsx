@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     height: '100vh',
   },
   todoList: {
-    padding: 20,
     height: Dimensions.get('window').height - 56,
   },
 });
