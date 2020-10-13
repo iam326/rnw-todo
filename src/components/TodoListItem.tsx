@@ -42,7 +42,7 @@ const TodoListItem: React.FC<Props> = ({
           onChangeText={(text) => {
             handleUpdateItem(index, text);
           }}
-          editable={true}
+          editable={!item.done}
           value={item.title}
         />
       </View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   done: {
     textDecorationLine: 'line-through',
-    color: '#666',
+    color: '#999',
   },
   date: {
     color: '#666',
