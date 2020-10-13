@@ -4,7 +4,7 @@ React Native for Web と Recoil で簡単な TODO リストを作ってみた。
 
 ## Demo
 
-![demo](./demo.gif)
+<img src="./demo.gif" width="480px" alt="demo">
 
 ## Environment
 
