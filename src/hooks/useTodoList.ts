@@ -10,8 +10,8 @@ const useTodoList = () => {
     (title: string) => {
       if (title !== '') {
         setTodoList([
-          ...todoList,
           { createdAt: Date.now(), title, done: false },
+          ...todoList,
         ]);
       }
     },
