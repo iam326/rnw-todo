@@ -47,9 +47,9 @@ const RecoilStatePersist: React.FC = () => {
 };
 
 const initializeState = (mutableSnapshot: MutableSnapshot) => {
-  const item = localStorage.getItem(Store.TodoList.data.key);
+  const item = localStorage.getItem(Store.TodoList.list.key);
   if (item) {
-    mutableSnapshot.set(Store.TodoList.data, JSON.parse(item).value);
+    mutableSnapshot.set(Store.TodoList.list, JSON.parse(item).value);
   }
 };
 
